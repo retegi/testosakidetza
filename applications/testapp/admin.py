@@ -4,8 +4,6 @@ from .models import Test
 
 # Register your models here.
 
-
-
 class ModalityAdmin(admin.ModelAdmin):
     list_display = (
         'name',
@@ -15,6 +13,7 @@ admin.site.register(Modality,ModalityAdmin)
 class TestAdmin(admin.ModelAdmin):
     list_display = (
         'number',
+        'question',
         'a',
         'b',
         'c',

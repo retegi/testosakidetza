@@ -16,6 +16,7 @@ class Modality(models.Model):
 class Test(models.Model):
     ANSWER=(('1','A'),('2','B'),('3','C'),('4','D'))
     number=models.IntegerField('Nº',null=True,blank=True)
+    question=models.TextField('Pregunta',null=True,blank=True)
     a=models.TextField('A',null=True,blank=True)
     b=models.TextField('B',null=True,blank=True)
     c=models.TextField('C',null=True,blank=True)

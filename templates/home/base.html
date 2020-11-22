@@ -1,0 +1,143 @@
+
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>Home · Testosakidetza</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+
+    <!-- Bootstrap core CSS -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <!-- Favicons -->
+<link rel="apple-touch-icon" href="/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+<link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="manifest" href="/docs/4.5/assets/img/favicons/manifest.json">
+<link rel="mask-icon" href="/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
+<link rel="icon" href="/docs/4.5/assets/img/favicons/favicon.ico">
+<meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#563d7c">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/album.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+  
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home_app:home' %}"><img style="height:30px" src="{% static 'img/home/testOsakidetza.png' %}" style="width:100%"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarsExample07">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'home_app:home' %}">Inicio<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contactar</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown07">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+        </ul>
+        
+          
+          <a href="{% url 'home_app:login' %}"><button style="background-color:#250F64; color:white" class="btn">Acceder a la plataforma</button></a>
+          <a class="ml-3" href="{% url 'home_app:user_registration' %}"><button class="btn btn-success">Nuevo usuario</button></a>
+        
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main role="main">
+
+    {% block content %}
+    {% endblock %}
+
+
+
+</main>
+
+
+
+<footer class="text-muted" style="background-color: #220463;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-sm-12 col-xs-12">
+          <h5 class="card-title text-white" style="text-align: center;">ENLACES</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" style="background-color: transparent;"><a class="text-white" href="http://testosakidetza.eus/">TestOsakidetza</a></li>
+            <li class="list-group-item" style="background-color: transparent;"><a class="text-white" href="http://www.it-txartela.net/KZ/usuario/index.jsp">IT-Txartela</a></li>
+            <!--<li class="list-group-item" style="background-color: transparent;"><a class="text-white" href="https://www.sosit-txartela.net">SosItTxartela</a></li>-->
+          </ul>
+        </div>
+        <div class="col-md-4 col-sm-12 col-xs-12">
+          <h5 class="card-title text-white"style="text-align: center;">OSAKIDETZA</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" style="background-color: transparent;"><a class="text-white" href="https://www.osakidetza.euskadi.eus">Osakidetza</a></li>
+            <li class="list-group-item" style="background-color: transparent;"><a class="text-white" href="https://www.osakidetza.euskadi.eus/r85-phhome00/es#">Osakidetza - Profesionales</a></li>
+            <li class="list-group-item" style="background-color: transparent;"><a class="text-white" href="https://www.osakidetza.euskadi.eus/r85-pkrrhh02/es/contenidos/informacion/ope2016_17/es_def/index.shtml">Osakidetza - Selección y provisión</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 col-sm-12 col-xs-12">
+          <h5 class="card-title text-white"style="text-align: center;">CONTACTO</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" style="background-color: transparent;"><a class="text-white" href="http://testosakidetza.eus/">TestOsakidetza</a></li>
+            <li class="list-group-item" style="background-color: transparent;"><a class="text-white" href="#">Bizkaia, Gipuzkoa, Araba</a></li>
+            <li class="list-group-item" style="background-color: transparent;"><a class="text-white" href="mailto:info@testosakidetza.eus">info@testosakidetza.eus</a></li>
+          </ul>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12" style="text-align: center;padding-top: 5%;">
+          <a style="color:grey;" href="{% url 'home_app:aviso_legal' %}"><h6 style="font-size: 12px;">Aviso legal</h6></a>
+          <a style="color:grey;" href="{% url 'home_app:politica_de_privacidad' %}"><h6 style="font-size: 12px;">Política de privacidad</h6></a>
+          <a style="color:grey;" href="{% url 'home_app:politica_de_cookies' %}"><h6 style="font-size: 12px;">Política de cookies</h6></a>
+        <a style="color:grey;" href="mailto:info@testosakidetza.eus" target="_blank"><h6 style="font-size: 12px;">info@testosakidetza.eus</h6></a> 
+        
+
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="{% static 'js/bootstrap.bundle.min.js' %}" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script></body>
+
+
+
+</html>
