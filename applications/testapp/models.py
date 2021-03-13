@@ -23,6 +23,7 @@ class Test(models.Model):
     d=models.TextField('D',null=True,blank=True)
     answer=models.CharField('Respuesta',max_length=1,choices=ANSWER, null=True, blank=True)
     nameModality=models.ForeignKey(Modality,on_delete=models.CASCADE,null=True,blank=True)
+    observations=models.TextField('Observaciones',null=True,blank=True)
 
 
     class Meta:
@@ -31,6 +32,6 @@ class Test(models.Model):
         ordering = ['number']
 
     def __str__(self):
-        return self.number
+        return str(self.number)
 
 

@@ -76,9 +76,20 @@
         </ul>
         
           
-          <a href="{% url 'home_app:login' %}"><button style="background-color:#250F64; color:white" class="btn">Acceder a la plataforma</button></a>
-          <a class="ml-3" href="{% url 'home_app:user_registration' %}"><button class="btn btn-success">Nuevo usuario</button></a>
-        
+          
+          {% if user.is_authenticated %}
+          <ul class="navbar-nav text-right">
+            <li class="nav-link">
+              <a class="" href="#">{{user}}</a>
+              <a style="text-transform:uppercase; color:black" href="{% url 'users_app:user-logout' %}"><button class="btn btn-secondary my-2 my-sm-0 ml-3" type="submit">Salir</button></a>
+              
+            </li>
+          </ul>
+          {% else %}
+          <a href="{% url 'users_app:user-login' %}"><button style="background-color:#250F64; color:white" class="btn">Acceder a la plataforma</button></a>
+          <a class="ml-3" href="{% url 'users_app:user-registration' %}"><button class="btn btn-success">Nuevo usuario</button></a>
+
+          {% endif %}
       </div>
     </div>
   </nav>

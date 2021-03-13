@@ -4,19 +4,12 @@ from . import views
 app_name = 'home_app'
 
 urlpatterns = [
+
     path('',
-        views.LoginView.as_view(),
-        name='login',
-    ),
-    path('user_registration/',
-        views.UserRegistrationView.as_view(),
-        name='user_registration',
-    ),
-    path('home/',
         views.HomePageView.as_view(),
         name='home',
     ),
-    path('aviso_lecal/',
+    path('aviso_legal/',
         views.AvisoLegalView.as_view(),
         name='aviso_legal',
     ),
