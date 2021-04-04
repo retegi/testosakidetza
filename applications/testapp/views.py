@@ -19,9 +19,7 @@ def testFilterByModalityAndByUser(request, questionModality):
     msg='Estás en la modalidad ' + questionModality
 
     test = Test.objects.all().filter(nameModality__name=questionModality).order_by('number')[:10]
-    for x in test:
-        print(test[x].question)
-        
+    
         #print(test[0].question)
 
 
