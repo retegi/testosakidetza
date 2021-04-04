@@ -16,4 +16,12 @@ urlpatterns = [
         views.UserLogoutView.as_view(),
         name='user-logout',
     ),
+    path('user_reset/',
+        views.UserResetView.as_view(),
+        name='user-reset',
+    ),
+    path('user_newPassword/<str:token>',
+        views.CreateNewPasswordView.as_view(),
+        name='user_newPassword',
+    ),
 ]

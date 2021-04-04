@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth import authenticate
-from .models import User
+from django.contrib.auth.forms import UserCreationForm
+from .models import Profile
+from django.contrib.auth.forms import User
 
 
 class LoginForm(forms.Form):
@@ -81,4 +83,52 @@ class UserRegisterForm(forms.ModelForm):
         )
     def clean_password2(self):
         if self.cleaned_data['password1'] != self.cleaned_data['password2']:
-            self.add_error('password2', 'Las contraseñas no son iguales')
+            self.add_error('password2', 'Las contraseñas no coinciden')
+
+
+class CustomUserCreationForm(UserCreationForm):
+
+    class Meta:
+        model = User
+        fields = ['username','first_name','last_name','email','password1','password2']
+
+
+"""    def __init__(self, *args, **kwargs):
+        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'class': 'form-control'})
+        self.fields['username'].label = "Usuario"
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['first_name'].label = "Apellido 1"
+        self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['last_name'].label = "Apellido 2"
+        self.fields['email'].widget.attrs.update({'class': 'form-control'})
+        self.fields['email'].label = "Email"
+        #self.fields['birth_date'].widget.attrs.update({'class': 'form-control'})
+        #self.fields['birth_date'].label = "Fecha nacimiento"
+        self.fields['password1'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password1'].label = "Password1"
+        self.fields['password2'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password2'].label = "Password2"
+
+    field_order = [
+        'username',
+        'first_name',
+        'last_name',
+        'email',
+        'password1',
+        'password2']
+        """
+
+class ResetPasswordForm(UserCreationForm):
+    email = forms.CharField(
+        label='',
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Email',
+                'class': 'form-control form-control-lg'
+            }
+        )
+    )
+
+    

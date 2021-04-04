@@ -80,7 +80,7 @@
           {% if user.is_authenticated %}
           <ul class="navbar-nav text-right">
             <li class="nav-link">
-              <a class="" href="#">{{user}}</a>
+              <a class="" href="#">{{ user }}</a>
               <a style="text-transform:uppercase; color:black" href="{% url 'users_app:user-logout' %}"><button class="btn btn-secondary my-2 my-sm-0 ml-3" type="submit">Salir</button></a>
               
             </li>

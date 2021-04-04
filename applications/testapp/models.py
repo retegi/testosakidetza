@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 
@@ -34,4 +35,18 @@ class Test(models.Model):
     def __str__(self):
         return str(self.number)
 
+
+"""class RespuestasUsuarios(models.Model):
+    ABCD_CHOICES = (
+    ('-','-'),
+    ('a', 'A'),
+    ('b','B'),
+    ('c','C'),
+    ('d','D'),
+)
+    usuario=model.ForeignKey(User)
+    test=models.ForeignKey(Test)
+    answerABCG=models.CharField(max_length=2, choices=ABCD_CHOICES, default='-')
+    datetime=models.DateTimeField(auto_now_add=True, blank=True)
+    correctoAnswer=models.BooleanField('Correcto')"""
 

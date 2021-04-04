@@ -93,6 +93,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+LOGIN_REDIRECT_URL: ''
+LOGOUT_REDIRECT_URL: ''
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -104,7 +107,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -114,3 +117,15 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_SENDER = 'info@testosakidetza.eus'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+BASE_URL = 'localhost'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

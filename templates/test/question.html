@@ -46,6 +46,13 @@
   </head>
   <body>
     <form class="form-signin p-1">
+      {% if messages %}
+      <ul class="messages p-3 p-5 list-group">
+    {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }} text-left list-group-item bg-success r-5"{% endif %} >{{ message }}</li>
+    {% endfor %}
+      </ul>
+    {% endif %}
   <div class="text-center mb-4">
     <h3 class="h4 mb-3 font-weight-normal text-secondary">Auxiliar Administrativo</h3>
   </div>      

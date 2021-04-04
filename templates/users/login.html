@@ -47,6 +47,14 @@
   <body>
     <form class="form-signin" method="POST">{% csrf_token %}
   <div class="text-center mb-4">
+
+    {% if messages %}
+      <ul class="messages p-3 p-5 list-group">
+    {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }} text-left list-group-item bg-success r-5"{% endif %} >{{ message }}</li>
+    {% endfor %}
+      </ul>
+    {% endif %}
     <a href="{% url 'home_app:home' %}"><img class="mb-3" src="{% static 'img/home/testOsakidetza.png' %}" style="width:50%"></a>
     <h1 class="h3 mb-3 font-weight-normal">Acceder a la plataforma</h1>
      </div>
@@ -72,6 +80,7 @@
   <button style="background-color:#250F64; color:white" class="btn btn-lg btn-block mb-3" type="submit">Iniciar sesión</button>
   <a href="{% url 'users_app:user-registration' %}"><p class="text-center">No soy usuario y quiero registrame</p></a>
   <a href="{% url 'home_app:home' %}"><p class="text-center mt-3">Volver a la página principal</p></a>
+  <a href="{% url 'users_app:user-reset' %}"><p class="text-center mt-3">Resetear contraseña</p></a>
 <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2021</p>
 
   

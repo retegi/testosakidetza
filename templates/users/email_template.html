@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>A Simple Responsive HTML Email</title>
+        <style type="text/css">
+        body {margin: 0; padding: 0; min-width: 100%!important;}
+        .content {width: 100%; max-width: 600px;}  
+        </style>
+    </head>
+    <body>
+        <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    <table class="content" align="left" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                            <td>
+                                <img style="width:50%" src="https://www.testosakidetza.eus/img/testOsakidetza.png">
+                                <p>Usuari@ {{ user }},<br>
+                                    Pulse el siguiente botón y siga las indicaciones para resetear la contraseña de acceso a la plataforma testosakidetza.eus</p>
+                                    <p><a href="{{ url_reset }}"><button style="background-color: limegreen; font-size: 20px; border-radius: 25px; border-color: mediumblue; padding:2%">Resetear contraseña</button></a></p>
+                                    <p>Fecha {{ date }}</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
+
+
+    

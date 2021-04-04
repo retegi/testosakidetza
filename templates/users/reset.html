@@ -45,20 +45,33 @@
     <link href="{% static 'css/floating-labels.css' %}" rel="stylesheet">
   </head>
   <body>
-    <form class="form-signin" method="post">{% csrf_token %}
+
+    
+
+
+    <form class="form-signin" method="POST">{% csrf_token %}
   <div class="text-center mb-4">
+
+    {% if messages %}
+      <ul class="messages p-3 p-5 list-group">
+    {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }} text-left list-group-item bg-success r-5"{% endif %} >{{ message }}</li>
+    {% endfor %}
+      </ul>
+    {% endif %}
+
     <a href="{% url 'home_app:home' %}"><img class="mb-3" src="{% static 'img/home/testOsakidetza.png' %}" style="width:50%"></a>
-    <h1 class="h3 mb-3 font-weight-normal">Nuevo usuario</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Resetear contraseña</h1>
      </div>
-     <form class="form-signin" method="post">{% csrf_token %}
-     {{ form.as_p }}
+    
+     <input class="form-control form-control-lg mb-3" type="email" name="email" placeholder="Email">
 
-
- 
-  <button style="background-color:#250F64; color:white" class="btn btn-lg btn-block" type="submit">Aceptar</button>
-  
+  <button style="background-color:#250F64; color:white" class="btn btn-lg btn-block mb-3" type="submit">Resetear contraseña</button>
+  <a href="{% url 'users_app:user-registration' %}"><p class="text-center">No soy usuario y quiero registrame</p></a>
   <a href="{% url 'home_app:home' %}"><p class="text-center mt-3">Volver a la página principal</p></a>
-  <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2021</p>
+<p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2021</p>
+
+  
 </form>
 
 </body>
