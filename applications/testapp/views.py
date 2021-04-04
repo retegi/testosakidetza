@@ -19,7 +19,11 @@ def testFilterByModalityAndByUser(request, questionModality):
     msg='Estás en la modalidad ' + questionModality
 
     test = Test.objects.all().filter(nameModality__name=questionModality).order_by('number')[:10]
-    print(test)
+    for x in test:
+        print(test[x].question)
+        
+        #print(test[0].question)
+
 
     if request.user.is_authenticated:
         username = request.user.username
@@ -28,7 +32,7 @@ def testFilterByModalityAndByUser(request, questionModality):
     msg='Estás en la modalidad ' + questionModality + ' usuario ' + username
 
     messages.success(request, msg)
-    return redirect(reverse_lazy('test_app:test'))
+    return redirect(reverse_lazy('test_app:test'),args=(test))
 
 
 """def testFilterByModalityAndByUser(request, questionModality):

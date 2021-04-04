@@ -1,9 +1,21 @@
 from pathlib import Path
 import os
+import json
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+with open("secret.json") as f:
+    secret = json.loads(f.read())
+
+
+def get_secret(secret_name, secrets=secret):
+    try:
+        return secrets[secret_name]
+    except:
+        msg = "la variable %s no existe" % secret_name
+        raise ImproperlyConfigured(msg)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -122,7 +134,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_SENDER = 'info@testosakidetza.eus'
 EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = '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'
+EMAIL_HOST_PASSWORD = get_secret('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

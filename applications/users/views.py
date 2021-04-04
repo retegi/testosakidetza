@@ -36,17 +36,6 @@ from django.utils.timezone import now
 class HomePageView(TemplateView):
     template_name = "users/index.html"
 
-"""class LoginView(TemplateView):
-    template_name = "users/login.html"""
-
-"""class UserRegistrationView(FormView):
-    template_name = "users/user_registration.html"
-    form_class = UserRegisterForm
-    success_url = reverse_lazy('home_app:home')"""
-
-
-
-
 
 
 class UserLoginView(FormView):
@@ -71,56 +60,40 @@ class UserLogoutView(FormView):
             )
         )
 
-
-"""class UserRegistrationView(FormView):
-    template_name = "users/user_registration.html"
-    form_class = UserRegisterForm
-    success_url = reverse_lazy('home_app:home')"""
-       
-
-"""class UserRegistrationView(FormView):
-    template_name = "registration/user_registration.html"
-    form_class = CustomUserCreationForm
-    print("FORMVIEW 12341827643981726498761239487691287346928746")
-    success_url = reverse_lazy('home_app:home')
-
-    def post(self, request):
-        print("Dentro de post...09238470928374092837409283740928374")
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            print("Dentro de isvalid")
-            form.save()
-            text = form.cleaned_data['username']
-        args = {'form': form, 'text':text}
-        return render(request, 'registration/user_registration.html', args)"""
-
-
 class UserRegistrationView(CreateView):
     template_name = 'users/user_registration.html'
     model = User
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('home_app:home')
 
+"""class UserRegistrationView(CreateView):
+    template_name = 'users/user_registration.html'
+    model = User
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('home_app:home')
+
+    def post(self, request):
+        email = request.POST.get('email', None)
+        #user = User.objects.filter(email__exact=email).last()
+        if True:
+            #token = get_random_string(length=34)
+            url_activation = 'http://127.0.0.1:8000{path}'.format(domain=settings.BASE_URL,path=reverse_lazy('users_app:user-login', kwargs={'email': email}))
+            context = {'url_activation': url_activation, 'user': user.username, 'date': now().strftime('%Y-%m-%d %H:%M:%S')}
+            html_message = render_to_string('users/email_confirm_new_user.html', context)
+            plain_message = strip_tags(html_message)
+            texto_email=send_mail(subject='Confirmación de registro de usuario', message=plain_message, from_email='retegi84@gmail.com',
+                          recipient_list=[email], html_message=html_message)
+            if texto_email:
+                #user_token = TokenToUser(user=user, token=token, date=now().strftime('%Y-%m-%d %H:%M:%S'))
+                #user_token.save()
+                messages.success(request, 'Ha sido enviado un email a su correo para resetear el password.')
+            else:
+                messages.error(request, '¡ups! Algo sucedió mal.')
+        else:
+            messages.error(request, 'El email introducido no existe. Pruebe de nuevo o regístrese como nuevo usuario.')
+        return redirect(reverse_lazy('users_app:user-login'))"""
 
 
-"""def registro(request):
-    print("Dentro de registro 12039470928347098237409782")
-    data = {
-        'form': CustomUserCreationForm()
-    }
-
-    if request.method == 'POST':
-        formulario = CustomUserCreationForm(data = request.POST)
-        if formulario.is_valid():
-            print("lñsdfjkñlaksdjfñlkajsdfñlkajsdñlfkajsñdlkfjñlaksdjf")
-            formulario.save()
-            user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password"])
-            login(request, user)
-            #messages.success(request,"Te has registrado correctamente.")
-            return redirect(to="home")
-        data["form"] = formulario
-    
-    return render(request, 'registration/user_registration.html', data)"""
 
 class UserResetView(View):
     template_name = "users/reset.html"
@@ -135,7 +108,6 @@ class UserResetView(View):
         user = User.objects.filter(email__exact=email).last()
         if user:
             token = get_random_string(length=34)
-
             url_reset = 'http://127.0.0.1:8000{path}'.format(domain=settings.BASE_URL,path=reverse_lazy('users_app:user_newPassword', kwargs={'token': token}))
             #url_reset = '{domain}/{path}'.format(domain=settings.BASE_URL,path=reverse_lazy('users_app:user_newPassword', kwargs={'token': token}))
             #url_reset = '{domain}{path}'.format(domain=settings.BASE_URL,path='/'+token)
