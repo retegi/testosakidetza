@@ -1,6 +1,6 @@
 from django.urls import include, path
 from . import views
-from .views import testFilterByModalityAndByUser
+from .views import testFilterByModalityAndByUserView
 
 app_name = 'test_app'
 
@@ -10,7 +10,12 @@ urlpatterns = [
         name='test',
     ),
     path('test/<str:questionModality>/',
-        views.testFilterByModalityAndByUser,
+        views.testFilterByModalityAndByUserView.as_view(),
         name='test',
     ),
+    path('test/',
+        views.testFilterByModalityAndByUserView,
+        name='test-process',
+    ),
+    
 ]

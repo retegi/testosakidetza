@@ -43,36 +43,49 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="{% static 'css/testQuestionPage.css' %}" rel="stylesheet">
+
   </head>
   <body>
-    <form class="form-signin p-1">
-      {% if messages %}
-      <ul class="messages p-3 p-5 list-group">
-    {% for message in messages %}
-      <li {% if message.tags %} class="{{ message.tags }} text-left list-group-item bg-success r-5"{% endif %} >{{ message }}</li>
-    {% endfor %}
-      </ul>
-    {% endif %}
+
+   
+    <form class="form-signin p-1" action="{% url 'test_app:test-process' %}" method="post">{% csrf_token %}
+      
+
+                {% if messages %}
+                  <ul class="messages p-3 p-5 list-group">
+                {% for message in messages %}
+                  <li {% if message.tags %} class="{{ message.tags }} text-left list-group-item bg-success r-5"{% endif %} >{{ message }}</li>
+                {% endfor %}
+                  </ul>
+                {% endif %}
+
+
+    {% for tes in object_list %}
   <div class="text-center mb-4">
-    <h3 class="h4 mb-3 font-weight-normal text-secondary">Auxiliar Administrativo</h3>
+    <h3 class="h4 mb-3 font-weight-normal text-secondary">{{ tes.nameModality }}</h3>
   </div>      
   <div class="text-left mb-4">
-    <h3 class="h3 mb-3 font-weight-normal">1.-Pregunta...</h3>
+    <h3 class="h3 mb-3 font-weight-normal">{{ tes.number }}.-{{ tes.question }}</h3>
   </div>
 
 
   <div class="checkbox mb-3">
-    <label>
-      <input type="checkbox" class="radio form-check-input" value="a" name="fooby[1][]" /> A .-<br>
-      <input type="checkbox" class="radio form-check-input" value="b" name="fooby[1][]" /> B .-<br>
-      <input type="checkbox" class="radio form-check-input" value="c" name="fooby[1][]" /> C .-<br>
-      <input type="checkbox" class="radio form-check-input" value="d" name="fooby[1][]" /> D .-<br>
+    <label class="ml-4">
+      <input id="idCheckboxA" type="checkbox" class="radio form-check-input" value="A" name="fooby[1][]" /><a id="aidCheckboxA"> A .-{{ tes.a }}</a><br>
+      <input id="idCheckboxB" type="checkbox" class="radio form-check-input" value="B" name="fooby[1][]" /><a id="aidCheckboxB"> B .-{{ tes.b }}</a><br>
+      <input id="idCheckboxC" type="checkbox" class="radio form-check-input" value="C" name="fooby[1][]" /><a id="aidCheckboxC"> C .-{{ tes.c }}</a><br>
+      <input id="idCheckboxD" type="checkbox" class="radio form-check-input" value="D" name="fooby[1][]" /><a id="aidCheckboxD"> D .-{{ tes.d }}</a><br>
+      <input id="Answer" style="visibility:hidden" type="hidden" value="{{ tes.get_answer_display }}"><br>
     </label>
-{{ test }}
-  </div>
+
  
-  <button style="background-color:#250F64; color:white" class="btn btn-lg btn-block" type="submit">Responder</button>
+{% endfor %}
+  </div>
+  <button id="correctButton" style="background-color:#250F64; color:white; display:block" class="btn btn-lg btn-block" type="button" onclick="correct()">Corregir</button>
+  <button id="nextButton" style="background-color:#250F64; color:white; display:none" class="btn btn-lg btn-block" type="submit">Siguiente</button>
   <a href="{% url 'home_app:home' %}"><p class="text-center mt-3">Volver a la página principal</p></a>
+
+
 
   <div>
     <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">1</div>
@@ -219,12 +232,113 @@
 
   </div>
 </form>
-
-
-
-
 </body>
 </html>
+<script>
+  function disableChangeAnswer(){
+    document.getElementById("idCheckboxA").disabled = true;
+    document.getElementById("idCheckboxB").disabled = true;
+    document.getElementById("idCheckboxC").disabled = true;
+    document.getElementById("idCheckboxD").disabled = true;
+  }
+
+  function correct(){
+      var varCheckboxA = document.getElementById("idCheckboxA");
+      var varCheckboxB = document.getElementById("idCheckboxB");
+      var varCheckboxC = document.getElementById("idCheckboxC");
+      var varCheckboxD = document.getElementById("idCheckboxD");
+      var avarCheckboxA = document.getElementById("aidCheckboxA");
+      var avarCheckboxB = document.getElementById("aidCheckboxB");
+      var avarCheckboxC = document.getElementById("aidCheckboxC");
+      var avarCheckboxD = document.getElementById("aidCheckboxD");
+      var varAnswer = document.getElementById("Answer");
+      
+        if (varCheckboxA.checked) 
+        {
+          if (varAnswer.value=="A")
+          {
+            document.getElementById("aidCheckboxA").style.color="green";
+            document.getElementById("correctButton").style.display="none";
+            document.getElementById("nextButton").style.display="block";
+            disableChangeAnswer()
+          }
+          else
+          {
+            document.getElementById("aidCheckboxA").style.color="red";
+            document.getElementById("correctButton").style.display="none";
+            document.getElementById("nextButton").style.display="block";
+            disableChangeAnswer()
+          }
+        }
+        else if (varCheckboxB.checked)
+        {
+          if (varAnswer.value=="B")
+          {
+            document.getElementById("aidCheckboxB").style.color="green";
+            document.getElementById("correctButton").style.display="none";
+            document.getElementById("nextButton").style.display="block";
+            disableChangeAnswer()
+          }
+          else
+          {
+            document.getElementById("aidCheckboxB").style.color="red";
+            document.getElementById("correctButton").style.display="none";
+            document.getElementById("nextButton").style.display="block";
+            disableChangeAnswer()
+          }
+        }
+        else if (varCheckboxC.checked)
+        {
+          if (varAnswer.value=="C")
+          {
+            document.getElementById("aidCheckboxC").style.color="green";
+            document.getElementById("correctButton").style.display="none";
+            document.getElementById("nextButton").style.display="block";
+            disableChangeAnswer()
+          }
+          else
+          {
+            document.getElementById("aidCheckboxC").style.color="red";
+            document.getElementById("correctButton").style.display="none";
+            document.getElementById("nextButton").style.display="block";
+            disableChangeAnswer()
+          }
+        }
+        else if (varCheckboxD.checked)
+        {
+          if (varAnswer.value=="D")
+          {
+            document.getElementById("aidCheckboxD").style.color="green";
+            document.getElementById("correctButton").style.display="none";
+            document.getElementById("nextButton").style.display="block";
+            disableChangeAnswer()
+          }
+          else
+          {
+            document.getElementById("aidCheckboxD").style.color="red";
+            document.getElementById("correctButton").style.display="none";
+            document.getElementById("nextButton").style.display="block";
+            disableChangeAnswer()
+          }
+        }
+
+
+        if (varAnswer.value=="A"){
+          document.getElementById("aidCheckboxA").style.color="green";
+        }
+        else if (varAnswer.value=="B"){
+          document.getElementById("aidCheckboxB").style.color="green";
+        }
+        else if (varAnswer.value=="C"){
+          document.getElementById("aidCheckboxC").style.color="green";
+        }
+        else if (varAnswer.value=="D"){
+          document.getElementById("aidCheckboxD").style.color="green";
+        }
+      }
+</script>
+
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>

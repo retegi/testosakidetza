@@ -1,15 +1,17 @@
 from pathlib import Path
+from unipath import Path
 import os
 import json
 from django.core.exceptions import ImproperlyConfigured
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+#BASE_DIR = Path(__file__).ancestor(3)
 
 with open("secret.json") as f:
     secret = json.loads(f.read())
-
-
 def get_secret(secret_name, secrets=secret):
     try:
         return secrets[secret_name]
@@ -25,9 +27,7 @@ def get_secret(secret_name, secrets=secret):
 SECRET_KEY = get_secret('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,16 +76,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'testosakidetza.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -126,11 +116,6 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
 
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_SENDER = 'info@testosakidetza.eus'
@@ -139,6 +124,7 @@ EMAIL_HOST_PASSWORD = get_secret('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-BASE_URL = 'localhost'
 
+#TEMA EMAIL:
+BASE_URL = 'localhost'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
