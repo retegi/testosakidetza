@@ -1,6 +1,7 @@
 from django.urls import include, path
 from . import views
 from .views import testFilterByModalityAndByUserView
+from .views import CongratulationsView
 
 app_name = 'test_app'
 
@@ -13,9 +14,16 @@ urlpatterns = [
         views.testFilterByModalityAndByUserView.as_view(),
         name='test',
     ),
-    path('test/',
-        views.testFilterByModalityAndByUserView,
-        name='test-process',
+    path('nextQuestion/',
+        views.nextQuestion,
+        name='nextQuestion',
     ),
-    
+    path('saveUserAnswer',
+        views.saveUserAnswer,
+        name='saveUserAnswer',
+    ),
+    path('congratulations/',
+        views.CongratulationsView.as_view(),
+        name='congratulations',
+    )
 ]

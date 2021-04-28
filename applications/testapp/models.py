@@ -1,5 +1,8 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import User
+from django.urls import reverse
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 
@@ -14,7 +17,7 @@ class Modality(models.Model):
     def __str__(self):
         return self.name
 
-class Test(models.Model):
+class TestQuestion(models.Model):
     ANSWER=(('1','A'),('2','B'),('3','C'),('4','D'))
     number=models.IntegerField('Nº',null=True,blank=True)
     question=models.TextField('Pregunta',null=True,blank=True)
@@ -26,7 +29,6 @@ class Test(models.Model):
     nameModality=models.ForeignKey(Modality,on_delete=models.CASCADE,null=True,blank=True)
     observations=models.TextField('Observaciones',null=True,blank=True)
 
-
     class Meta:
         verbose_name = 'Test'
         verbose_name_plural = 'Test'
@@ -36,17 +38,40 @@ class Test(models.Model):
         return str(self.number)
 
 
-"""class RespuestasUsuarios(models.Model):
-    ABCD_CHOICES = (
-    ('-','-'),
-    ('a', 'A'),
-    ('b','B'),
-    ('c','C'),
-    ('d','D'),
-)
-    usuario=model.ForeignKey(User)
-    test=models.ForeignKey(Test)
-    answerABCG=models.CharField(max_length=2, choices=ABCD_CHOICES, default='-')
-    datetime=models.DateTimeField(auto_now_add=True, blank=True)
-    correctoAnswer=models.BooleanField('Correcto')"""
+class UserAnswers(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    modality = models.ForeignKey(Modality,on_delete=models.CASCADE,null=True,blank=True)
+    numberQuestion = models.IntegerField('Número pregunta',null=True,blank=True)
+    correctAnswerCounterSameQuestion=models.IntegerField('Veces que se ha respondido una pregunta correctamente',null=True,blank=True)
+    wrongAnswerCounterSameQuestion=models.IntegerField('Veces que se ha respondido una pregunta incorrectamente',null=True,blank=True)
+
+    class Meta:
+        verbose_name = 'Respuesta de usuario'
+        verbose_name_plural = 'Respuestas de usuarios'
+        ordering = ['numberQuestion']
+
+    def __str__(self):
+        return str(self.numberQuestion)
+
+    def get_absolute_url(self):
+        return reverse('test_app:test-hacertest', args=[self.user])
+
+class TestCounter(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    modality = models.ForeignKey(Modality,on_delete=models.CASCADE,null=True,blank=True)
+    counter = models.IntegerField('Contador',null=True,blank=True)
+    listQuestionsNumbers = models.TextField('Array números preguntas',null=True,blank=True)
+    completed = models.BooleanField('Completado',null=True,blank=True, default=False)
+
+    class Meta:
+        verbose_name = 'Contador de preguntas'
+        verbose_name_plural = 'Contadores de preguntas'
+        ordering = ['user','modality']
+    
+    def __str__(self):
+        return str(self.counter)
+
+
+
+
 

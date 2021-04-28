@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v4.1.1">
+    <meta name="author" content="TestOsakidetza">
+    <meta name="generator" content="">
     <title>Preguntas · testOsakidetza</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/floating-labels/">
@@ -48,7 +48,7 @@
   <body>
 
    
-    <form class="form-signin p-1" action="{% url 'test_app:test-process' %}" method="post">{% csrf_token %}
+    <form class="form-signin p-1" action="{% url 'test_app:saveUserAnswer' %}" method="post">{% csrf_token %}
       
 
                 {% if messages %}
@@ -58,11 +58,16 @@
                 {% endfor %}
                   </ul>
                 {% endif %}
+               
+               {% if questionCount == null or questionCount == 0 %} 
+                 <h3 style="color:mediumblue">¡Vaya! De momento no hay preguntas preparadas para esta categoría. Le pedimos paciencia y si quiere nos puede mandar un email para conocer la necesidad de preguntas en esta categoría, ya que las añadimos dando prioridad según la demanda. ¡Gracias!</h3>
+               {% endif %}     
 
+<h1 id="titleH1" style="visibility: hidden;">¡Felicidades has completado todas las preguntas!</h1>
 
     {% for tes in object_list %}
   <div class="text-center mb-4">
-    <h3 class="h4 mb-3 font-weight-normal text-secondary">{{ tes.nameModality }}</h3>
+    <h3 id="titleH3" class="h4 mb-3 font-weight-normal text-secondary">{{ tes.nameModality }}</h3>
   </div>      
   <div class="text-left mb-4">
     <h3 class="h3 mb-3 font-weight-normal">{{ tes.number }}.-{{ tes.question }}</h3>
@@ -71,16 +76,23 @@
 
   <div class="checkbox mb-3">
     <label class="ml-4">
-      <input id="idCheckboxA" type="checkbox" class="radio form-check-input" value="A" name="fooby[1][]" /><a id="aidCheckboxA"> A .-{{ tes.a }}</a><br>
-      <input id="idCheckboxB" type="checkbox" class="radio form-check-input" value="B" name="fooby[1][]" /><a id="aidCheckboxB"> B .-{{ tes.b }}</a><br>
-      <input id="idCheckboxC" type="checkbox" class="radio form-check-input" value="C" name="fooby[1][]" /><a id="aidCheckboxC"> C .-{{ tes.c }}</a><br>
-      <input id="idCheckboxD" type="checkbox" class="radio form-check-input" value="D" name="fooby[1][]" /><a id="aidCheckboxD"> D .-{{ tes.d }}</a><br>
-      <input id="Answer" style="visibility:hidden" type="hidden" value="{{ tes.get_answer_display }}"><br>
+      <input id="idCheckboxA" type="checkbox" class="radio form-check-input" value="A" name="nameCheckboxA" /><a id="aidCheckboxA"> A .-{{ tes.a }}</a><br>
+      <input id="idCheckboxB" type="checkbox" class="radio form-check-input" value="B" name="nameCheckboxB" /><a id="aidCheckboxB"> B .-{{ tes.b }}</a><br>
+      <input id="idCheckboxC" type="checkbox" class="radio form-check-input" value="C" name="nameCheckboxC" /><a id="aidCheckboxC"> C .-{{ tes.c }}</a><br>
+      <input id="idCheckboxD" type="checkbox" class="radio form-check-input" value="D" name="nameCheckboxD" /><a id="aidCheckboxD"> D .-{{ tes.d }}</a><br>
+      <input id="Answer" style="visibility:hidden" type="hidden" name="answer" value="{{ tes.get_answer_display }}"><br>
+      <input id="ModalityId" style="visibility:hidden" type="hidden" name="modalityId" value="{{ tes.nameModality.id }}"><br>
+      <input id="ModalityName" style="visibility:hidden" type="hidden" name="modalityName" value="{{ tes.nameModality }}"><br>
+      <input id="NumberQuestion" style="visibility:hidden" type="hidden" name="numberQuestion" value="{{ tes.number }}"><br>
+      <input id="SelectedAnswer" style="visibility:hidden" type="text" name="selectedAnswer" value="asdf"><br>
+
+
     </label>
 
  
-{% endfor %}
+
   </div>
+  {% endfor %}
   <button id="correctButton" style="background-color:#250F64; color:white; display:block" class="btn btn-lg btn-block" type="button" onclick="correct()">Corregir</button>
   <button id="nextButton" style="background-color:#250F64; color:white; display:none" class="btn btn-lg btn-block" type="submit">Siguiente</button>
   <a href="{% url 'home_app:home' %}"><p class="text-center mt-3">Volver a la página principal</p></a>
@@ -88,153 +100,41 @@
 
 
   <div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">1</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">2</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">3</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">4</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">5</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">6</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">7</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">8</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">9</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">10</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">11</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">12</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">13</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">14</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">15</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">16</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#ffffff;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(212, 251, 212);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:rgb(152, 255, 152);color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:lime;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    <div style="width:20px;height:20px;background-color:#250F64;color:grey;margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">888</div>
-    
 
+    {% for answers in answers %} <!-- Muestra los cuadros inferiores con el número de pregunta y color de fondo según los aciertos-->
+      <div style="width:20px;height:20px;background-color:
+      
+        {% if answers.correctAnswerCounterSameQuestion == 0 %}
+          #ffffff;
+        {% elif  answers.correctAnswerCounterSameQuestion == 1 %}
+          rgb(212, 251, 212);
+        {% elif  answers.correctAnswerCounterSameQuestion == 2 %}
+          rgb(152, 255, 152);
+        {% elif  answers.correctAnswerCounterSameQuestion == 3 %}
+          lime;
+        {% elif  answers.correctAnswerCounterSameQuestion == 4 %}
+          #250F64;
+        {% else %}
+          #ffffff;
+        {% endif %}
+
+        color:grey;
+        margin:2px;text-align:center;font-size:9px;padding-top:0.3%;float:left;">{{ answers.numberQuestion }}</div>
+    {% endfor %}
+    <br><br><br>
+    
   </div>
 </form>
 </body>
 </html>
 <script>
+    var vartitleH1=document.getElementById('titleH3').innerHTML;
+    if(vartitleH1){
+      if(vartitleH1==null){
+      document.getElementById('titleH1').style.visibility=hidden;
+      }
+    }
+
   function disableChangeAnswer(){
     document.getElementById("idCheckboxA").disabled = true;
     document.getElementById("idCheckboxB").disabled = true;
@@ -252,15 +152,18 @@
       var avarCheckboxC = document.getElementById("aidCheckboxC");
       var avarCheckboxD = document.getElementById("aidCheckboxD");
       var varAnswer = document.getElementById("Answer");
+
       
-        if (varCheckboxA.checked) 
+
+
+        if (varCheckboxA.checked)   
         {
           if (varAnswer.value=="A")
           {
             document.getElementById("aidCheckboxA").style.color="green";
             document.getElementById("correctButton").style.display="none";
             document.getElementById("nextButton").style.display="block";
-            disableChangeAnswer()
+            disableChangeAnswer()            
           }
           else
           {
@@ -269,6 +172,7 @@
             document.getElementById("nextButton").style.display="block";
             disableChangeAnswer()
           }
+          document.getElementById("SelectedAnswer").value = "A";
         }
         else if (varCheckboxB.checked)
         {
@@ -286,6 +190,7 @@
             document.getElementById("nextButton").style.display="block";
             disableChangeAnswer()
           }
+          document.getElementById("SelectedAnswer").value = "B";
         }
         else if (varCheckboxC.checked)
         {
@@ -303,6 +208,7 @@
             document.getElementById("nextButton").style.display="block";
             disableChangeAnswer()
           }
+          document.getElementById("SelectedAnswer").value = "C";
         }
         else if (varCheckboxD.checked)
         {
@@ -320,22 +226,28 @@
             document.getElementById("nextButton").style.display="block";
             disableChangeAnswer()
           }
+          document.getElementById("SelectedAnswer").value = "D";
         }
 
 
         if (varAnswer.value=="A"){
           document.getElementById("aidCheckboxA").style.color="green";
+          document.getElementById("SelectedAnswer").value = "A";
         }
         else if (varAnswer.value=="B"){
           document.getElementById("aidCheckboxB").style.color="green";
+          document.getElementById("SelectedAnswer").value = "B";
         }
         else if (varAnswer.value=="C"){
           document.getElementById("aidCheckboxC").style.color="green";
+          document.getElementById("SelectedAnswer").value = "C";
         }
         else if (varAnswer.value=="D"){
           document.getElementById("aidCheckboxD").style.color="green";
+          document.getElementById("SelectedAnswer").value = "D";
         }
       }
+
 </script>
 
 

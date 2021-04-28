@@ -1,0 +1,26 @@
+Prueba de imprimir datos
+
+
+
+
+
+<FORM action="{% url 'test_app:saveUserAnswer' %}" method="post">{% csrf_token %}
+    <LABEL for="name">Name: </LABEL>
+    <INPUT type="text" id="name" name="name"><BR>
+    <INPUT type="submit" value="Send">
+ </FORM>
+
+
+
+
+
+{% for key, value in datos.items %}
+    <h1> Key del diccionario: {{ key }} </h1>
+    <p> Value del diccionario: {{ value }} </p>
+{% endfor %}
+
+{{ object_list }}
+
+{% for key, value in objeto.items %}
+ {{ obj }}
+{% endfor %}

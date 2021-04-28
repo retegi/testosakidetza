@@ -24,5 +24,4 @@ urlpatterns = [
     re_path('', include('applications.home.urls')),
     re_path('users/', include('applications.users.urls')),
     re_path('test/', include('applications.testapp.urls')),
-    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

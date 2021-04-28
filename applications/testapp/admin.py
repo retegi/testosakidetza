@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import Modality
-from .models import Test
+from .models import TestQuestion
+from .models import UserAnswers
+from .models import TestCounter
 
 # Register your models here.
 
@@ -10,7 +12,7 @@ class ModalityAdmin(admin.ModelAdmin):
     )
 admin.site.register(Modality,ModalityAdmin)
 
-class TestAdmin(admin.ModelAdmin):
+class TestQuestionAdmin(admin.ModelAdmin):
     list_display = (
         'number',
         'question',
@@ -21,4 +23,25 @@ class TestAdmin(admin.ModelAdmin):
         'answer',
         'nameModality'
     )
-admin.site.register(Test,TestAdmin)
+admin.site.register(TestQuestion,TestQuestionAdmin)
+
+
+class UserAnswersAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'modality',
+        'numberQuestion',
+        'correctAnswerCounterSameQuestion',
+        'wrongAnswerCounterSameQuestion'
+    )
+admin.site.register(UserAnswers,UserAnswersAdmin)
+
+
+class TestCounterAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'modality',
+        'counter',
+        'listQuestionsNumbers'
+    )
+admin.site.register(TestCounter,TestCounterAdmin)
