@@ -206,8 +206,8 @@ def saveUserAnswer(request):
         numberQuestion = int(request.POST['numberQuestion'])
         selectedAnswer = request.POST['selectedAnswer']
 
-        #print("Respuesta correcta: ", answerCorrectPost)
-        #print("Respuesta seleccionada: ", selectedAnswer)
+        print("Respuesta correcta: ", answerCorrectPost)
+        print("Respuesta seleccionada: ", selectedAnswer)
         #print("Modalidad: ", modalityPost)
         #print("Número pregunta: ", numberQuestion)
         #print("Nombre modalidad: ", modalityNamePost)
@@ -238,14 +238,15 @@ def saveUserAnswer(request):
                 UserAnswers.objects.filter(user=userId, modality=modalityPost, numberQuestion=numberQuestion).update(correctAnswerCounterSameQuestion = correctCounterValue)
 
             #Si la respuesta ha sido incorrecta WRONG sumamos valor a la variable wrongCounterValue y hacemos update    
-            if selectedAnswer != answerCorrectPost:
+            elif selectedAnswer != answerCorrectPost:
                 #print("Respuesta incorrecta")
                 wrongCounterValue=wrongCounterValue+1
                 correctCounterValue=0
                 #print("Incorrectas sumadas: ", wrongCounterValue)
                 UserAnswers.objects.filter(user=userId, modality=modalityPost, numberQuestion=numberQuestion).update(wrongAnswerCounterSameQuestion = wrongCounterValue,correctAnswerCounterSameQuestion = correctCounterValue)
-        
-        #Guardar respuesta de nueva pregunta:
+                
+                
+                #Guardar respuesta de nueva pregunta:
         else:
             if selectedAnswer == answerCorrectPost:
                 correctCounterNewInsert = 1

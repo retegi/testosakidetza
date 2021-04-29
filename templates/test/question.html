@@ -84,7 +84,7 @@
       <input id="ModalityId" style="visibility:hidden" type="hidden" name="modalityId" value="{{ tes.nameModality.id }}"><br>
       <input id="ModalityName" style="visibility:hidden" type="hidden" name="modalityName" value="{{ tes.nameModality }}"><br>
       <input id="NumberQuestion" style="visibility:hidden" type="hidden" name="numberQuestion" value="{{ tes.number }}"><br>
-      <input id="SelectedAnswer" style="visibility:hidden" type="text" name="selectedAnswer" value="asdf"><br>
+      <input id="SelectedAnswer" style="visibility:hidden" type="text" name="selectedAnswer" value=""><br>
 
 
     </label>
@@ -232,19 +232,19 @@
 
         if (varAnswer.value=="A"){
           document.getElementById("aidCheckboxA").style.color="green";
-          document.getElementById("SelectedAnswer").value = "A";
+          //document.getElementById("SelectedAnswer").value = "A";
         }
         else if (varAnswer.value=="B"){
           document.getElementById("aidCheckboxB").style.color="green";
-          document.getElementById("SelectedAnswer").value = "B";
+          //document.getElementById("SelectedAnswer").value = "B";
         }
         else if (varAnswer.value=="C"){
           document.getElementById("aidCheckboxC").style.color="green";
-          document.getElementById("SelectedAnswer").value = "C";
+          //document.getElementById("SelectedAnswer").value = "C";
         }
         else if (varAnswer.value=="D"){
           document.getElementById("aidCheckboxD").style.color="green";
-          document.getElementById("SelectedAnswer").value = "D";
+          //document.getElementById("SelectedAnswer").value = "D";
         }
       }
 
